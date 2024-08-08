@@ -111,5 +111,19 @@
       "indentSize" : 2,
       "springConfigurationFormat" : "yaml"
     }
+  }, {
+    "module" : "spring-boot-tomcat",
+    "date" : "2024-08-08T16:00:10.518739163Z",
+    "properties" : {
+      "packageName" : "com.mycompany.myapp",
+      "projectName" : "JHipster Sample Application",
+      "baseName" : "jhipsterSampleApplication",
+      "serverPort" : 8080,
+      "endOfLine" : "lf",
+      "keycloakClientScopeName" : "jhipster",
+      "keycloakRealmName" : "jhipster",
+      "indentSize" : 2,
+      "springConfigurationFormat" : "yaml"
+    }
   } ]
 }
