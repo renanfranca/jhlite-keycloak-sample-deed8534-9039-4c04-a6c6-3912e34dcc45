@@ -55,5 +55,19 @@
       "indentSize" : 2,
       "springConfigurationFormat" : "yaml"
     }
+  }, {
+    "module" : "java-memoizers",
+    "date" : "2024-08-08T16:00:09.931915959Z",
+    "properties" : {
+      "packageName" : "com.mycompany.myapp",
+      "projectName" : "JHipster Sample Application",
+      "baseName" : "jhipsterSampleApplication",
+      "serverPort" : 8080,
+      "endOfLine" : "lf",
+      "keycloakClientScopeName" : "jhipster",
+      "keycloakRealmName" : "jhipster",
+      "indentSize" : 2,
+      "springConfigurationFormat" : "yaml"
+    }
   } ]
 }
