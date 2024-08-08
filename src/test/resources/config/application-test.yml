@@ -7,5 +7,12 @@ logging:
 spring:
   main:
     banner-mode: 'off'
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        provider:
+          oidc:
+            issuer-uri: http://DO_NOT_CALL:9080/realms/jhipster
 server:
   port: 0
