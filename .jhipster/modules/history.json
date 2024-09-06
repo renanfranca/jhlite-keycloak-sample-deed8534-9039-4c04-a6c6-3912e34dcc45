@@ -139,5 +139,19 @@
       "indentSize" : 2,
       "springConfigurationFormat" : "yaml"
     }
+  }, {
+    "module" : "application-service-hexagonal-architecture-documentation",
+    "date" : "2024-09-06T15:47:52.555442804Z",
+    "properties" : {
+      "keycloakRealmName" : "jhipster",
+      "endOfLine" : "lf",
+      "springConfigurationFormat" : "yaml",
+      "packageName" : "com.mycompany.myapp",
+      "projectName" : "JHipster Sample Application",
+      "serverPort" : 8080,
+      "keycloakClientScopeName" : "jhipster",
+      "indentSize" : 2,
+      "baseName" : "jhipsterSampleApplication"
+    }
   } ]
 }

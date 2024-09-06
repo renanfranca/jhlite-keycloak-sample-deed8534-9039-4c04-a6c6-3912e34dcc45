@@ -46,5 +46,6 @@ docker compose -f src/main/docker/keycloak.yml up -d
 - [Assertions](documentation/assertions.md)
 - [Logs Spy](documentation/logs-spy.md)
 - [CORS configuration](documentation/cors-configuration.md)
+- [Hexagonal architecture](documentation/hexagonal-architecture.md)
 
 <!-- jhipster-needle-documentation -->
