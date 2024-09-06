@@ -86,6 +86,7 @@
     <failsafe-plugin.version>3.3.1</failsafe-plugin.version>
     <spring-boot.version>3.3.2</spring-boot.version>
     <reflections.version>0.10.2</reflections.version>
+    <maven-checkstyle-plugin.version>3.5.0</maven-checkstyle-plugin.version>
   </properties>
 
   <build>
@@ -213,6 +214,25 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven-checkstyle-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <configLocation>checkstyle.xml</configLocation>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <consoleOutput>true</consoleOutput>
+          <failsOnError>true</failsOnError>
+        </configuration>
       </plugin>
     </plugins>
     <defaultGoal>spring-boot:run</defaultGoal>
