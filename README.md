@@ -48,5 +48,6 @@ docker compose -f src/main/docker/keycloak.yml up -d
 - [CORS configuration](documentation/cors-configuration.md)
 - [Hexagonal architecture](documentation/hexagonal-architecture.md)
 - [Front hexagonal architecture](documentation/front-hexagonal-architecture.md)
+- [Vue](documentation/vue.md)
 
 <!-- jhipster-needle-documentation -->
