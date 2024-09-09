@@ -9,7 +9,7 @@ export class KeycloakAuthService implements AuthService {
 
   constructor() {
     this.keycloak = new Keycloak({
-      url: 'http://localhost:8080/auth',
+      url: 'https://localhost:9443',
       realm: 'jhipster',
       clientId: 'web_app'
     });
@@ -17,7 +17,8 @@ export class KeycloakAuthService implements AuthService {
 
   async authenticate(): Promise<AuthenticatedUser> {
     try {
-      const authenticated = await this.keycloak.init({ onLoad: 'login-required' });
+      const authenticated = await this.keycloak.init({ onLoad: 'login-required',
+        checkLoginIframe: false });
       if (authenticated) {
         return {
           isAuthenticated: true,
