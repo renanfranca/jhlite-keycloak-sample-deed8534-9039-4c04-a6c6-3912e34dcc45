@@ -1,30 +1,17 @@
 import type { AuthRepository } from '@/auth/domain/AuthRepository';
 import type { AuthenticatedUser } from '@/auth/domain/AuthenticatedUser';
-import Keycloak from 'keycloak-js';
+import { KeycloakHttp } from './KeycloakHttp';
 
 export class KeycloakAuthRepository implements AuthRepository {
-  constructor(private keycloak: Keycloak) {}
+  constructor(private keycloakHttp: KeycloakHttp) {}
 
   async authenticate(): Promise<AuthenticatedUser> {
-    try {
-      const authenticated = await this.keycloak.init({ onLoad: 'login-required',
-        checkLoginIframe: false });
-      if (authenticated) {
-        return {
-          isAuthenticated: true,
-          username: this.keycloak.tokenParsed?.preferred_username || '',
-          token: this.keycloak.token || ''
-        };
-      }
-    } catch (error) {
-      console.error('Authentication failed', error);
-    }
-    return { isAuthenticated: false, username: '', token: '' };
+    return this.keycloakHttp.authenticate();
   }
 
   async logout(): Promise<boolean> {
     try {
-      await this.keycloak.logout();
+      await this.keycloakHttp.logout();
       return true;
     } catch (error) {
       console.error('Logout failed', error);
@@ -33,21 +20,10 @@ export class KeycloakAuthRepository implements AuthRepository {
   }
 
   async isAuthenticated(): Promise<boolean> {
-    try {
-      await this.keycloak.updateToken(30);
-      return this.keycloak.authenticated || false;
-    } catch (error) {
-      return false;
-    }
+    return this.keycloakHttp.isAuthenticated();
   }
 
   async refreshToken(): Promise<string> {
-    try {
-      await this.keycloak.updateToken(30);
-      return this.keycloak.token || '';
-    } catch (error) {
-      console.error('Token refresh failed', error);
-      return '';
-    }
+    return this.keycloakHttp.refreshToken();
   }
 }
