@@ -8,4 +8,4 @@
   </div>
 </template>
 
-<script lang="ts" src="./AuthVue.ts"></script>
+<script lang="ts" src="./AuthVue.component.ts"></script>

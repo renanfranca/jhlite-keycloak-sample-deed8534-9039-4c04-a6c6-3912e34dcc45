@@ -1,4 +1,3 @@
-//TODO: rename to AuthVue.component.ts
 import { defineComponent, ref } from 'vue';
 import { inject } from '@/injections';
 import { AUTH_REPOSITORY } from '@/auth/application/AuthProvider';
