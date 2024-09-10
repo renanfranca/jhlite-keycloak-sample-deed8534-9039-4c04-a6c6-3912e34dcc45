@@ -1,6 +1,6 @@
 //TODO: rename to KeycloakAuthRepository.spec.ts
 import { describe, it, expect, vi } from 'vitest';
-import { KeycloakAuthService } from '@/auth/infrastructure/secondary/KeycloakAuthService';
+import { KeycloakAuthRepository } from '@/auth/infrastructure/secondary/KeycloakAuthRepository';
 
 vi.mock('keycloak-js', () => {
   return {
@@ -15,30 +15,30 @@ vi.mock('keycloak-js', () => {
   }
 });
 
-describe('KeycloakAuthService', () => {
+describe('KeycloakAuthRepository', () => {
   it('should authenticate a user', async () => {
-    const authService = new KeycloakAuthService();
-    const user = await authService.authenticate();
+    const authRepository = new KeycloakAuthRepository();
+    const user = await authRepository.authenticate();
     expect(user.isAuthenticated).toBe(true);
     expect(user.username).toBe('mockuser');
     expect(user.token).toBe('mock-token');
   });
 
   it('should logout a user', async () => {
-    const authService = new KeycloakAuthService();
-    const result = await authService.logout();
+    const authRepository = new KeycloakAuthRepository();
+    const result = await authRepository.logout();
     expect(result).toBe(true);
   });
 
   it('should check if a user is authenticated', async () => {
-    const authService = new KeycloakAuthService();
-    const isAuthenticated = await authService.isAuthenticated();
+    const authRepository = new KeycloakAuthRepository();
+    const isAuthenticated = await authRepository.isAuthenticated();
     expect(isAuthenticated).toBe(true);
   });
 
   it('should refresh the token', async () => {
-    const authService = new KeycloakAuthService();
-    const newToken = await authService.refreshToken();
+    const authRepository = new KeycloakAuthRepository();
+    const newToken = await authRepository.refreshToken();
     expect(newToken).toBe('mock-token');
   });
 });
