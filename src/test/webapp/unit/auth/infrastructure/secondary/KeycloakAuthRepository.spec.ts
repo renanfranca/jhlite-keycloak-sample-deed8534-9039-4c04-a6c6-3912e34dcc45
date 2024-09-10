@@ -1,4 +1,3 @@
-//TODO: rename to KeycloakAuthRepository.spec.ts
 import { describe, it, expect, vi } from 'vitest';
 import { KeycloakAuthRepository } from '@/auth/infrastructure/secondary/KeycloakAuthRepository';
 
