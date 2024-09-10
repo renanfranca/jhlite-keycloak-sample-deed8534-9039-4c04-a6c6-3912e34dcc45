@@ -1,18 +1,9 @@
 import type { AuthRepository } from '@/auth/domain/AuthRepository';
 import type { AuthenticatedUser } from '@/auth/domain/AuthenticatedUser';
-//TODO: must use provider like axios at jhipster-lite src/main/webapp/app/module/application/ModuleProvider.ts
 import Keycloak from 'keycloak-js';
 
 export class KeycloakAuthRepository implements AuthRepository {
-  private keycloak: Keycloak;
-
-  constructor() {
-    this.keycloak = new Keycloak({
-      url: 'https://localhost:9443',
-      realm: 'jhipster',
-      clientId: 'web_app'
-    });
-  }
+  constructor(private keycloak: Keycloak) {}
 
   async authenticate(): Promise<AuthenticatedUser> {
     try {
