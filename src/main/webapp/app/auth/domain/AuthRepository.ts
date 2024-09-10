@@ -1,7 +1,6 @@
-//TODO: rename to AuthRepository.ts
 import type {AuthenticatedUser} from "@/auth/domain/AuthenticatedUser";
 
-export interface AuthService {
+export interface AuthRepository {
   authenticate(): Promise<AuthenticatedUser>;
   logout(): Promise<boolean>;
   isAuthenticated(): Promise<boolean>;

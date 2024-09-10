@@ -6,7 +6,7 @@ import AuthVue from '@/auth/infrastructure/primary/AuthVue.vue';
 //   provide(MODULES_REPOSITORY, modulesRepository);
 //   return mount(LandscapePresetConfigurationVue);
 // };
-import { AUTH_SERVICE } from '@/auth/application/AuthProvider';
+import { AUTH_REPOSITORY } from '@/auth/application/AuthProvider';
 
 vi.mock('@/injections', () => ({
   inject: () => ({

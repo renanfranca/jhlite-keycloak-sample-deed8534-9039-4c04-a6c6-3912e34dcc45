@@ -1,11 +1,10 @@
 import { key } from 'piqure';
 import { provide } from '@/injections';
-import type { AuthService } from '@/auth/domain/AuthService';
+import type { AuthRepository } from '@/auth/domain/AuthRepository';
 import { KeycloakAuthService } from '@/auth/infrastructure/secondary/KeycloakAuthService';
 
-//TODO: rename to export const AUTH_REPOSITORY = key<AuthRepository>('AuthRepository');
-export const AUTH_SERVICE = key<AuthService>('AuthService');
+export const AUTH_REPOSITORY = key<AuthRepository>('AuthRepository');
 
 export const provideForAuth = (): void => {
-  provide(AUTH_SERVICE, new KeycloakAuthService());
+  provide(AUTH_REPOSITORY, new KeycloakAuthService());
 };
