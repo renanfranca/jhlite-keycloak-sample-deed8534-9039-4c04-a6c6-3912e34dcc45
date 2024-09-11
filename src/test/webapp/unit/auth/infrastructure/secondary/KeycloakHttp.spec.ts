@@ -10,16 +10,6 @@ const createKeycloakHttp = () => {
 };
 
 describe('KeycloakHttp', () => {
-  it('should initialize Keycloak', async () => {
-    const { keycloakStub, keycloakHttp } = createKeycloakHttp();
-    keycloakStub.init.resolves(true);
-
-    const result = await keycloakHttp.init();
-
-    expect(result).toBe(true);
-    expect(keycloakStub.init.calledOnce).toBe(true);
-  });
-
   describe('Authentication', () => {
     it('should authenticate successfully', async () => {
       const { keycloakStub, keycloakHttp } = createKeycloakHttp();

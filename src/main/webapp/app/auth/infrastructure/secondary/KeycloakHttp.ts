@@ -4,7 +4,7 @@ import type { AuthenticatedUser } from '@/auth/domain/AuthenticatedUser';
 export class KeycloakHttp {
   constructor(private readonly keycloak: Keycloak) {}
 
-  async init(): Promise<boolean> {
+  private async init(): Promise<boolean> {
     return this.keycloak.init({ onLoad: 'login-required', checkLoginIframe: false });
   }
 
