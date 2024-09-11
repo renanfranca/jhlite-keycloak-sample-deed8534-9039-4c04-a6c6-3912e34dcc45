@@ -1,8 +1,8 @@
-import axios from 'axios';
+import type { AxiosInstance } from 'axios';
 import { inject } from '@/injections';
 import { AUTH_REPOSITORY } from '@/auth/application/AuthProvider';
 
-export const setupAxiosInterceptors = (): void => {
+export const setupAxiosInterceptors = (axios: AxiosInstance): void => {
   const auths = inject(AUTH_REPOSITORY);
 
   axios.interceptors.request.use(async (config) => {
