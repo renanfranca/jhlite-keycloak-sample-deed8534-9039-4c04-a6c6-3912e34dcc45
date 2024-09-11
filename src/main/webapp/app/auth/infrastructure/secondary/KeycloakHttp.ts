@@ -2,11 +2,7 @@ import Keycloak from 'keycloak-js';
 import type { AuthenticatedUser } from '@/auth/domain/AuthenticatedUser';
 
 export class KeycloakHttp {
-  private keycloak: Keycloak;
-
-  constructor(config: Keycloak.KeycloakConfig) {
-    this.keycloak = new Keycloak(config);
-  }
+  constructor(private readonly keycloak: Keycloak) {}
 
   async init(): Promise<boolean> {
     return this.keycloak.init({ onLoad: 'login-required', checkLoginIframe: false });
@@ -19,7 +15,7 @@ export class KeycloakHttp {
         return {
           isAuthenticated: true,
           username: this.keycloak.tokenParsed?.preferred_username || '',
-          token: this.keycloak.token || ''
+          token: this.keycloak.token || '',
         };
       }
     } catch (error) {
