@@ -2,52 +2,59 @@ import Keycloak from 'keycloak-js';
 import type { AuthenticatedUser } from '@/auth/domain/AuthenticatedUser';
 
 export class KeycloakHttp {
+  private initialized: boolean = false;
+
   constructor(private readonly keycloak: Keycloak) {}
 
   private async init(): Promise<boolean> {
-    return this.keycloak.init({ onLoad: 'login-required', checkLoginIframe: false });
+    if (!this.initialized) {
+      await this.keycloak.init({ onLoad: 'check-sso', checkLoginIframe: false });
+      this.initialized = true;
+    }
+    return this.initialized;
   }
 
   async authenticate(): Promise<AuthenticatedUser> {
     try {
-      const authenticated = await this.init();
-      if (authenticated) {
+      await this.init();
+      if (this.keycloak.authenticated) {
         return {
           isAuthenticated: true,
           username: this.keycloak.tokenParsed?.preferred_username || '',
           token: this.keycloak.token || '',
         };
+      } else {
+        return { isAuthenticated: false, username: '', token: '' };
       }
     } catch (error) {
-      console.error('Authentication failed', error);
+      console.error('Authentication check failed', error);
+      return { isAuthenticated: false, username: '', token: '' };
     }
-    return { isAuthenticated: false, username: '', token: '' };
+  }
+
+  async login(): Promise<void> {
+    await this.init();
+    return this.keycloak.login();
   }
 
   async logout(): Promise<void> {
+    await this.init();
     return this.keycloak.logout();
   }
 
   async isAuthenticated(): Promise<boolean> {
-    try {
-      await this.keycloak.updateToken(30);
-      return this.keycloak.authenticated || false;
-    } catch (error) {
-      return false;
-    }
+    await this.init();
+    return !!this.keycloak.token;
   }
 
   async refreshToken(): Promise<string> {
+    await this.init();
     try {
-      await this.keycloak.updateToken(30);
+      await this.keycloak.updateToken(5);
       return this.keycloak.token || '';
     } catch (error) {
       console.error('Token refresh failed', error);
       return '';
     }
-  }
-
-  getKeycloakInstance(): Keycloak {
-    return this.keycloak;
   }
 }

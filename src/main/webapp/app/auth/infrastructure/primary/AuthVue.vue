@@ -1,6 +1,7 @@
 <template>
   <div>
-    <button v-if="!user" @click="login">Login</button>
+    <div v-if="isLoading">Loading...</div>
+    <button v-else-if="!user" @click="login">Login</button>
     <div v-else>
       <p>Welcome, {{ user.username }}!</p>
       <button @click="logout">Logout</button>

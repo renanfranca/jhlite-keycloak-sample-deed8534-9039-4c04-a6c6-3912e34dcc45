@@ -24,4 +24,5 @@ setupAxiosInterceptors(axios);
 
 app.use(router);
 // jhipster-needle-main-ts-provider
+
 app.mount('#app');

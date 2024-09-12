@@ -6,7 +6,21 @@ export class KeycloakAuthRepository implements AuthRepository {
   constructor(private keycloakHttp: KeycloakHttp) {}
 
   async authenticate(): Promise<AuthenticatedUser> {
-    return this.keycloakHttp.authenticate();
+    try {
+      return await this.keycloakHttp.authenticate();
+    } catch (error) {
+      console.error('Authentication failed', error);
+      return { isAuthenticated: false, username: '', token: '' };
+    }
+  }
+
+  async login(): Promise<void> {
+    try {
+      await this.keycloakHttp.login();
+    } catch (error) {
+      console.error('Login failed', error);
+      throw error; // Re-throw to allow caller to handle
+    }
   }
 
   async logout(): Promise<boolean> {
@@ -20,10 +34,20 @@ export class KeycloakAuthRepository implements AuthRepository {
   }
 
   async isAuthenticated(): Promise<boolean> {
-    return this.keycloakHttp.isAuthenticated();
+    try {
+      return await this.keycloakHttp.isAuthenticated();
+    } catch (error) {
+      console.error('isAuthenticated check failed', error);
+      return false;
+    }
   }
 
   async refreshToken(): Promise<string> {
-    return this.keycloakHttp.refreshToken();
+    try {
+      return await this.keycloakHttp.refreshToken();
+    } catch (error) {
+      console.error('Token refresh failed', error);
+      return '';
+    }
   }
 }

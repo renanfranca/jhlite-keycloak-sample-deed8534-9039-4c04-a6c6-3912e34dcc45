@@ -66,12 +66,4 @@ describe('KeycloakHttp', () => {
     expect(result).toBe(newToken);
     expect(keycloakStub.updateToken.calledOnce).toBe(true);
   });
-
-  it('should get Keycloak instance', () => {
-    const { keycloakStub, keycloakHttp } = createKeycloakHttp();
-
-    const result = keycloakHttp.getKeycloakInstance();
-
-    expect(result).toBe(keycloakStub);
-  });
 });
