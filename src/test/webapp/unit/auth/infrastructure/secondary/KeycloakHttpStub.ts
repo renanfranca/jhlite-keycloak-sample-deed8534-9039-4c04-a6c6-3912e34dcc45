@@ -4,17 +4,17 @@ import type { KeycloakHttp } from '@/auth/infrastructure/secondary/KeycloakHttp'
 import type { AuthenticatedUser } from '@/auth/domain/AuthenticatedUser';
 
 export interface KeycloakHttpStub extends KeycloakHttp {
-  authenticate: SinonStub;
+  currentUser: SinonStub;
   logout: SinonStub;
-  isAuthenticated: SinonStub;
+  authenticated: SinonStub;
   refreshToken: SinonStub;
   getKeycloakInstance: SinonStub;
 }
 
 export const stubKeycloakHttp = (): KeycloakHttpStub => ({
-  authenticate: sinon.stub(),
+  currentUser: sinon.stub(),
   logout: sinon.stub(),
-  isAuthenticated: sinon.stub(),
+  authenticated: sinon.stub(),
   refreshToken: sinon.stub(),
   getKeycloakInstance: sinon.stub(),
 }) as KeycloakHttpStub;

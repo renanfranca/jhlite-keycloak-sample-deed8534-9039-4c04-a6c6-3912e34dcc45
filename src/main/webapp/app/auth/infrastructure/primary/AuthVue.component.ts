@@ -17,9 +17,9 @@ export default defineComponent({
     const init = async () => {
       isLoading.value = true;
       try {
-        const authenticated = await authRepository.isAuthenticated();
+        const authenticated = await authRepository.authenticated();
         if (authenticated) {
-          user.value = await authRepository.authenticate();
+          user.value = await authRepository.currentUser();
         } else {
           user.value = null;
         }
@@ -35,7 +35,6 @@ export default defineComponent({
       isLoading.value = true;
       try {
         await authRepository.login();
-        // After login, the page will reload, and init() will be called again
       } catch (error) {
         console.error('Login failed:', error);
         user.value = null;

@@ -14,12 +14,12 @@ describe('KeycloakAuthRepository', () => {
 
   it('should authenticate a user', async () => {
     const mockUser = fakeAuthenticatedUser();
-    keycloakHttpStub.authenticate.resolves(mockUser);
+    keycloakHttpStub.currentUser.resolves(mockUser);
 
-    const user = await authRepository.authenticate();
+    const user = await authRepository.currentUser();
 
     expect(user).toEqual(mockUser);
-    expect(keycloakHttpStub.authenticate.calledOnce).toBe(true);
+    expect(keycloakHttpStub.currentUser.calledOnce).toBe(true);
   });
 
   it('should logout a user', async () => {
@@ -32,12 +32,12 @@ describe('KeycloakAuthRepository', () => {
   });
 
   it('should check if a user is authenticated', async () => {
-    keycloakHttpStub.isAuthenticated.resolves(true);
+    keycloakHttpStub.authenticated.resolves(true);
 
-    const isAuthenticated = await authRepository.isAuthenticated();
+    const isAuthenticated = await authRepository.authenticated();
 
     expect(isAuthenticated).toBe(true);
-    expect(keycloakHttpStub.isAuthenticated.calledOnce).toBe(true);
+    expect(keycloakHttpStub.authenticated.calledOnce).toBe(true);
   });
 
   it('should refresh the token', async () => {

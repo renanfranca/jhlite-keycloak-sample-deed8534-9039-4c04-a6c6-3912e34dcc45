@@ -18,7 +18,7 @@ describe('KeycloakHttp', () => {
       keycloakStub.tokenParsed = { preferred_username: fakeUser.username };
       keycloakStub.token = fakeUser.token;
 
-      const result = await keycloakHttp.authenticate();
+      const result = await keycloakHttp.currentUser();
 
       expect(result).toEqual(fakeUser);
       expect(keycloakStub.init.calledOnce).toBe(true);
@@ -28,7 +28,7 @@ describe('KeycloakHttp', () => {
       const { keycloakStub, keycloakHttp } = createKeycloakHttp();
       keycloakStub.init.resolves(false);
 
-      const result = await keycloakHttp.authenticate();
+      const result = await keycloakHttp.currentUser();
 
       expect(result).toEqual({ isAuthenticated: false, username: '', token: '' });
       expect(keycloakStub.init.calledOnce).toBe(true);
@@ -49,7 +49,7 @@ describe('KeycloakHttp', () => {
     keycloakStub.updateToken.resolves();
     keycloakStub.authenticated = true;
 
-    const result = await keycloakHttp.isAuthenticated();
+    const result = await keycloakHttp.authenticated();
 
     expect(result).toBe(true);
     expect(keycloakStub.updateToken.calledOnce).toBe(true);

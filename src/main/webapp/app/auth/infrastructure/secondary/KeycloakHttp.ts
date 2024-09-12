@@ -14,7 +14,7 @@ export class KeycloakHttp {
     return this.initialized;
   }
 
-  async authenticate(): Promise<AuthenticatedUser> {
+  async currentUser(): Promise<AuthenticatedUser> {
     try {
       await this.init();
       if (this.keycloak.authenticated) {
@@ -42,7 +42,7 @@ export class KeycloakHttp {
     return this.keycloak.logout();
   }
 
-  async isAuthenticated(): Promise<boolean> {
+  async authenticated(): Promise<boolean> {
     await this.init();
     return !!this.keycloak.token;
   }

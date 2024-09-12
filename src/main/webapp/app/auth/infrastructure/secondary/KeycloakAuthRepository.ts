@@ -5,9 +5,9 @@ import { KeycloakHttp } from './KeycloakHttp';
 export class KeycloakAuthRepository implements AuthRepository {
   constructor(private keycloakHttp: KeycloakHttp) {}
 
-  async authenticate(): Promise<AuthenticatedUser> {
+  async currentUser(): Promise<AuthenticatedUser> {
     try {
-      return await this.keycloakHttp.authenticate();
+      return await this.keycloakHttp.currentUser();
     } catch (error) {
       console.error('Authentication failed', error);
       return { isAuthenticated: false, username: '', token: '' };
@@ -19,7 +19,7 @@ export class KeycloakAuthRepository implements AuthRepository {
       await this.keycloakHttp.login();
     } catch (error) {
       console.error('Login failed', error);
-      throw error; // Re-throw to allow caller to handle
+      throw error;
     }
   }
 
@@ -33,9 +33,9 @@ export class KeycloakAuthRepository implements AuthRepository {
     }
   }
 
-  async isAuthenticated(): Promise<boolean> {
+  async authenticated(): Promise<boolean> {
     try {
-      return await this.keycloakHttp.isAuthenticated();
+      return await this.keycloakHttp.authenticated();
     } catch (error) {
       console.error('isAuthenticated check failed', error);
       return false;
