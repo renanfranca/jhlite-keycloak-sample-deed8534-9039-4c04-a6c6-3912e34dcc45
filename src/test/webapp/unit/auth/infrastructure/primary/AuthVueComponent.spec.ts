@@ -1,30 +1,47 @@
-import { describe, it, expect, vi } from 'vitest';
-import { shallowMount } from '@vue/test-utils';
+import { describe, it, expect } from 'vitest';
+import {shallowMount, flushPromises, mount} from '@vue/test-utils';
 import AuthVue from '@/auth/infrastructure/primary/AuthVue.vue';
-//TODO: use provide(AUTH_SERVICE, authServiceMock) with mound like in jhipster-lite src/test/webapp/unit/module/primary/landscape/LandscapePresetConfigurationComponent.spec.ts
-// const wrap = (modulesRepository: ModulesRepositoryStub): VueWrapper => {
-//   provide(MODULES_REPOSITORY, modulesRepository);
-//   return mount(LandscapePresetConfigurationVue);
-// };
 import { AUTH_REPOSITORY } from '@/auth/application/AuthProvider';
+import { provide } from '@/injections';
+import sinon from 'sinon';
+import type { SinonStub } from 'sinon';
+import type {AuthRepository} from "@/auth/domain/AuthRepository";
 
-vi.mock('@/injections', () => ({
-  inject: () => ({
-    authenticate: vi.fn().mockResolvedValue({ isAuthenticated: true, username: 'testuser', token: 'token' }),
-    logout: vi.fn().mockResolvedValue(true),
-  }),
-}));
+interface MockAuthRepository extends AuthRepository {
+  currentUser: SinonStub;
+  login: SinonStub;
+  logout: SinonStub;
+  authenticated: SinonStub;
+  refreshToken: SinonStub;
+}
+
+const mockAuthRepository: MockAuthRepository  = {
+  currentUser: sinon.stub(),
+  login: sinon.stub(),
+  logout: sinon.stub(),
+  authenticated: sinon.stub(),
+  refreshToken: sinon.stub(),
+};
+
+const wrap = () => {
+  provide(AUTH_REPOSITORY, mockAuthRepository);
+  return mount(AuthVue);
+};
 
 describe('AuthVue', () => {
-  it('should render login button when user is not authenticated', () => {
-    const wrapper = shallowMount(AuthVue);
+  it('should render login button when user is not authenticated', async () => {
+    mockAuthRepository.authenticated.resolves(false);
+    mockAuthRepository.currentUser.resolves({ isAuthenticated: false, username: '', token: '' });
+    const wrapper = wrap();
+    await flushPromises();
     expect(wrapper.find('button').text()).toBe('Login');
   });
 
   it('should render logout button and username when user is authenticated', async () => {
-    const wrapper = shallowMount(AuthVue);
-    await wrapper.vm.login();
-    await wrapper.vm.$nextTick();
+    mockAuthRepository.authenticated.resolves(true);
+    mockAuthRepository.currentUser.resolves({ isAuthenticated: true, username: 'testuser', token: 'token' });
+    const wrapper = wrap();
+    await flushPromises();
     expect(wrapper.find('p').text()).toBe('Welcome, testuser!');
     expect(wrapper.find('button').text()).toBe('Logout');
   });

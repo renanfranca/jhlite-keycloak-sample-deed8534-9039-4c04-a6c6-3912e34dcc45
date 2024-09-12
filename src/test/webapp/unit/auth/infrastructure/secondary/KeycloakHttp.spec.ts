@@ -15,6 +15,7 @@ describe('KeycloakHttp', () => {
       const { keycloakStub, keycloakHttp } = createKeycloakHttp();
       const fakeUser = fakeAuthenticatedUser();
       keycloakStub.init.resolves(true);
+      keycloakStub.authenticated = true;
       keycloakStub.tokenParsed = { preferred_username: fakeUser.username };
       keycloakStub.token = fakeUser.token;
 
@@ -46,13 +47,14 @@ describe('KeycloakHttp', () => {
 
   it('should check if authenticated', async () => {
     const { keycloakStub, keycloakHttp } = createKeycloakHttp();
-    keycloakStub.updateToken.resolves();
+    keycloakStub.init.resolves(true);
     keycloakStub.authenticated = true;
+    keycloakStub.token = 'valid-token';
 
     const result = await keycloakHttp.authenticated();
 
     expect(result).toBe(true);
-    expect(keycloakStub.updateToken.calledOnce).toBe(true);
+    expect(keycloakStub.init.calledOnce).toBe(true);
   });
 
   it('should refresh token', async () => {
