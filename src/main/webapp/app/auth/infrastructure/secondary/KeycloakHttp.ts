@@ -15,19 +15,14 @@ export class KeycloakHttp {
   }
 
   async currentUser(): Promise<AuthenticatedUser> {
-    try {
-      await this.init();
-      if (this.keycloak.authenticated) {
-        return {
-          isAuthenticated: true,
-          username: this.keycloak.tokenParsed?.preferred_username || '',
-          token: this.keycloak.token || '',
-        };
-      } else {
-        return { isAuthenticated: false, username: '', token: '' };
-      }
-    } catch (error) {
-      console.error('Authentication check failed', error);
+    await this.init();
+    if (this.keycloak.authenticated) {
+      return {
+        isAuthenticated: true,
+        username: this.keycloak.tokenParsed?.preferred_username || '',
+        token: this.keycloak.token || '',
+      };
+    } else {
       return { isAuthenticated: false, username: '', token: '' };
     }
   }
@@ -49,12 +44,7 @@ export class KeycloakHttp {
 
   async refreshToken(): Promise<string> {
     await this.init();
-    try {
-      await this.keycloak.updateToken(5);
-      return this.keycloak.token || '';
-    } catch (error) {
-      console.error('Token refresh failed', error);
-      return '';
-    }
+    await this.keycloak.updateToken(5);
+    return this.keycloak.token || '';
   }
 }
