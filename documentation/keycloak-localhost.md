@@ -4,7 +4,7 @@
 
 1. **Generate a Private Key and a Self-Signed SSL Certificate:**
 
-   Use the command below to generate a private key and a self-signed certificate. This command creates a certificate valid for the domain "localhost" and adds "localhost" as a "Subject Alternative Name (SAN)":
+   Go to project folder `/src/main/docker` and use the command below to generate a private key and a self-signed certificate. This command creates a certificate valid for the domain "localhost" and adds "localhost" as a "Subject Alternative Name (SAN)":
 
    ```bash
    openssl req -x509 -newkey rsa:2048 -nodes -keyout key.pem -out cert.pem -days 365 -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost"
@@ -23,12 +23,13 @@
 
 1. **Edit the Keycloak Configuration File (`keycloak.yml`):**
 
-   Add or update the `keycloak.yml` file with the following configurations:
+   Add or update the `keycloak.yml` file like the following configurations:
 
    ```yaml
+   # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
    services:
      keycloak:
-       image: quay.io/keycloak/keycloak:25.0.2
+       image: quay.io/keycloak/keycloak:25.0.5
        command: 'start-dev --import-realm'
        volumes:
          - ./keycloak-realm-config:/opt/keycloak/data/import
@@ -43,6 +44,8 @@
          - KC_HTTPS_PORT=9443
          - KC_HTTPS_CERTIFICATE_FILE=/etc/x509/https/tls.crt
          - KC_HTTPS_CERTIFICATE_KEY_FILE=/etc/x509/https/tls.key
+       # If you want to expose these ports outside your dev PC,
+       # remove the "127.0.0.1:" prefix
        ports:
          - '127.0.0.1:9080:9080'
          - '127.0.0.1:9443:9443'
@@ -58,8 +61,8 @@
    If using `docker-compose`, run the following commands to restart Keycloak:
 
    ```bash
-   docker-compose down
-   docker-compose up -d
+   docker compose -f src/main/docker/keycloak.yml down
+   docker compose -f src/main/docker/keycloak.yml up -d
    ```
 
    This command tears down the existing container and recreates it with the new SSL certificate settings.
