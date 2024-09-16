@@ -6,12 +6,11 @@ export class KeycloakHttp {
 
   constructor(private readonly keycloak: Keycloak) {}
 
-  private async init(): Promise<boolean> {
+  private async init(): Promise<void> {
     if (!this.initialized) {
       await this.keycloak.init({ onLoad: 'check-sso', checkLoginIframe: false });
       this.initialized = true;
     }
-    return this.initialized;
   }
 
   async currentUser(): Promise<AuthenticatedUser> {
