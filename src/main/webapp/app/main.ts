@@ -12,7 +12,7 @@ const app = createApp(AppVue);
 
 const keycloakHttp = new KeycloakHttp(
   new Keycloak({
-    url: 'https://localhost:9443',
+    url: 'http://localhost:9080',
     realm: 'jhipster',
     clientId: 'web_app',
   }),
