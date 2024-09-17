@@ -5,6 +5,7 @@ import type { AuthenticatedUser } from '@/auth/domain/AuthenticatedUser';
 
 export interface KeycloakHttpStub extends KeycloakHttp {
   currentUser: SinonStub;
+  login: SinonStub;
   logout: SinonStub;
   authenticated: SinonStub;
   refreshToken: SinonStub;
@@ -13,6 +14,7 @@ export interface KeycloakHttpStub extends KeycloakHttp {
 
 export const stubKeycloakHttp = (): KeycloakHttpStub => ({
   currentUser: sinon.stub(),
+  login: sinon.stub(),
   logout: sinon.stub(),
   authenticated: sinon.stub(),
   refreshToken: sinon.stub(),
