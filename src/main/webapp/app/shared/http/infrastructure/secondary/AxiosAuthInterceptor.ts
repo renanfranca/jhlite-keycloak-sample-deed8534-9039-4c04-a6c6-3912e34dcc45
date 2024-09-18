@@ -2,9 +2,6 @@ import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosErr
 import { inject } from '@/injections';
 import { AUTH_REPOSITORY } from '@/auth/application/AuthProvider';
 
-type SuccessHandler = (response: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>;
-type ErrorHandler = (error: AxiosError) => Promise<never>;
-
 export const setupAxiosInterceptors = (axios: AxiosInstance): void => {
   const auths = inject(AUTH_REPOSITORY);
 
