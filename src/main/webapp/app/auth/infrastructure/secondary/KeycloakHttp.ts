@@ -6,7 +6,7 @@ export class KeycloakHttp {
 
   constructor(private readonly keycloak: Keycloak) {}
 
-  private async init(): Promise<void> {
+  private async ensureInitialized(): Promise<void> {
     if (!this.initialized) {
       await this.keycloak.init({ onLoad: 'check-sso', checkLoginIframe: false });
       this.initialized = true;
@@ -14,7 +14,7 @@ export class KeycloakHttp {
   }
 
   async currentUser(): Promise<AuthenticatedUser> {
-    await this.init();
+    await this.ensureInitialized();
     if (this.keycloak.authenticated) {
       return {
         isAuthenticated: true,
@@ -27,22 +27,22 @@ export class KeycloakHttp {
   }
 
   async login(): Promise<void> {
-    await this.init();
+    await this.ensureInitialized();
     return this.keycloak.login();
   }
 
   async logout(): Promise<void> {
-    await this.init();
+    await this.ensureInitialized();
     return this.keycloak.logout();
   }
 
   async authenticated(): Promise<boolean> {
-    await this.init();
+    await this.ensureInitialized();
     return !!this.keycloak.token;
   }
 
   async refreshToken(): Promise<string> {
-    await this.init();
+    await this.ensureInitialized();
     await this.keycloak.updateToken(5);
     return this.keycloak.token || '';
   }
