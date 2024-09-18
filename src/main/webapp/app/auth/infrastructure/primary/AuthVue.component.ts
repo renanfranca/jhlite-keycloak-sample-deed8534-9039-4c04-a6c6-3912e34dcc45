@@ -16,19 +16,13 @@ export default defineComponent({
 
     const init = async () => {
       isLoading.value = true;
-      try {
-        const authenticated = await authRepository.authenticated();
-        if (authenticated) {
-          user.value = await authRepository.currentUser();
-        } else {
-          user.value = null;
-        }
-      } catch (error) {
-        console.error('Error initializing auth:', error);
+      const authenticated = await authRepository.authenticated();
+      if (authenticated) {
+        user.value = await authRepository.currentUser();
+      } else {
         user.value = null;
-      } finally {
-        isLoading.value = false;
       }
+      isLoading.value = false;
     };
 
     const login = async () => {
