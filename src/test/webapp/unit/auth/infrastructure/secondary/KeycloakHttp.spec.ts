@@ -61,6 +61,38 @@ describe('KeycloakHttp', () => {
     });
   });
 
+  it('should handle undefined preferred_username', async () => {
+    const { keycloakStub, keycloakHttp } = createKeycloakHttp();
+    keycloakStub.init.resolves(true);
+    keycloakStub.authenticated = true;
+    keycloakStub.tokenParsed = {}; // No preferred_username
+    keycloakStub.token = 'test-token';
+
+    const result = await keycloakHttp.currentUser();
+
+    expect(result).toEqual({
+      isAuthenticated: true,
+      username: '',
+      token: 'test-token'
+    });
+  });
+
+  it('should handle undefined token', async () => {
+    const { keycloakStub, keycloakHttp } = createKeycloakHttp();
+    keycloakStub.init.resolves(true);
+    keycloakStub.authenticated = true;
+    keycloakStub.tokenParsed = { preferred_username: 'test' };
+    keycloakStub.token = undefined;
+
+    const result = await keycloakHttp.currentUser();
+
+    expect(result).toEqual({
+      isAuthenticated: true,
+      username: 'test',
+      token: ''
+    });
+  });
+
   it('should logout', async () => {
     const { keycloakStub, keycloakHttp } = createKeycloakHttp();
     keycloakStub.logout.resolves();
