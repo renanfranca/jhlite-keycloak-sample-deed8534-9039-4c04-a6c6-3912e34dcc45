@@ -29,6 +29,8 @@ export default defineComponent({
       isLoading.value = true;
       try {
         await authRepository.login();
+        const currentUser = await authRepository.currentUser();
+        user.value = currentUser.isAuthenticated ? currentUser : null;
       } catch (error) {
         console.error('Login failed:', error);
         user.value = null;
