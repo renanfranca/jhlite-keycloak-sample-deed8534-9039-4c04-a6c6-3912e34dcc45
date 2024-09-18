@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {shallowMount, flushPromises, mount} from '@vue/test-utils';
+import { flushPromises, mount} from '@vue/test-utils';
 import AuthVue from '@/auth/infrastructure/primary/AuthVue.vue';
 import { AUTH_REPOSITORY } from '@/auth/application/AuthProvider';
 import { provide } from '@/injections';
