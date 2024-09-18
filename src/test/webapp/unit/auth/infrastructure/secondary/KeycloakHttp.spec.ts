@@ -52,6 +52,8 @@ describe('KeycloakHttp', () => {
       keycloakStub.init.resolves(true);
 
       await keycloakHttp.currentUser();
+      await keycloakHttp.login();
+      await keycloakHttp.logout();
       await keycloakHttp.authenticated();
       await keycloakHttp.refreshToken();
 
@@ -91,4 +93,15 @@ describe('KeycloakHttp', () => {
     expect(result).toBe(newToken);
     expect(keycloakStub.updateToken.calledOnce).toBe(true);
   });
+});
+
+it('should login successfully', async () => {
+  const { keycloakStub, keycloakHttp } = createKeycloakHttp();
+  keycloakStub.init.resolves(true);
+  keycloakStub.login.resolves();
+
+  await keycloakHttp.login();
+
+  expect(keycloakStub.init.calledOnce).toBe(true);
+  expect(keycloakStub.login.calledOnce).toBe(true);
 });
