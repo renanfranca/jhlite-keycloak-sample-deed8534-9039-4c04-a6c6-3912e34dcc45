@@ -1,5 +1,8 @@
+type AuthenticatedUserName = string;
+type AuthenticatedUserToken = string;
+
 export interface AuthenticatedUser {
   isAuthenticated: boolean;
-  username: string;
-  token: string;
+  username: AuthenticatedUserName;
+  token: AuthenticatedUserToken;
 }
