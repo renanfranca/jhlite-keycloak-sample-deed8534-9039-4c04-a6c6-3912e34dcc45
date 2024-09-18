@@ -36,6 +36,29 @@ describe('KeycloakHttp', () => {
     });
   });
 
+  describe('Initialization', () => {
+    it('should not reinitialize if already initialized', async () => {
+      const { keycloakStub, keycloakHttp } = createKeycloakHttp();
+      keycloakStub.init.resolves(true);
+
+      await keycloakHttp.currentUser();
+      await keycloakHttp.currentUser();
+
+      expect(keycloakStub.init.calledOnce).toBe(true);
+    });
+
+    it('should initialize only once across different method calls', async () => {
+      const { keycloakStub, keycloakHttp } = createKeycloakHttp();
+      keycloakStub.init.resolves(true);
+
+      await keycloakHttp.currentUser();
+      await keycloakHttp.authenticated();
+      await keycloakHttp.refreshToken();
+
+      expect(keycloakStub.init.calledOnce).toBe(true);
+    });
+  });
+
   it('should logout', async () => {
     const { keycloakStub, keycloakHttp } = createKeycloakHttp();
     keycloakStub.logout.resolves();
