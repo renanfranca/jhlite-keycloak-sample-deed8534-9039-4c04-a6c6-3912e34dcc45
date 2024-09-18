@@ -65,7 +65,7 @@ describe('KeycloakHttp', () => {
     const { keycloakStub, keycloakHttp } = createKeycloakHttp();
     keycloakStub.init.resolves(true);
     keycloakStub.authenticated = true;
-    keycloakStub.tokenParsed = {}; // No preferred_username
+    keycloakStub.tokenParsed = {};
     keycloakStub.token = 'test-token';
 
     const result = await keycloakHttp.currentUser();
