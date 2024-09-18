@@ -122,4 +122,64 @@ describe('AuthVue', () => {
       expect(wrapper.find('button').text()).toBe('Login');
     });
   });
+
+  describe('Logout', () => {
+    it('should handle successful logout', async () => {
+      mockAuthRepository.logout.resolves(true);
+      mockAuthRepository.authenticated.resolves(false);
+
+      await componentVm(wrapper).logout();
+      await flushPromises();
+
+      expect(mockAuthRepository.logout.called).toBe(true);
+      expect(componentVm(wrapper).isLoading).toBe(false);
+      expect(componentVm(wrapper).user).toBeNull();
+      expect(wrapper.find('button').text()).toBe('Login');
+    });
+
+    it('should handle failed logout attempt', async () => {
+      const error = new Error('Logout failed');
+      mockAuthRepository.logout.rejects(error);
+
+      await componentVm(wrapper).logout();
+      await flushPromises();
+
+      expect(mockAuthRepository.logout.called).toBe(true);
+      expect(componentVm(wrapper).isLoading).toBe(false);
+      expect(consoleErrorSpy).toHaveBeenCalledWith('Logout failed:', error);
+    });
+
+    it('should set isLoading to true during logout process', async () => {
+      mockAuthRepository.logout.resolves(true);
+      const logoutPromise = componentVm(wrapper).logout();
+      expect(componentVm(wrapper).isLoading).toBe(true);
+
+      await logoutPromise;
+      await flushPromises();
+
+      expect(componentVm(wrapper).isLoading).toBe(false);
+    });
+
+    it('should set user to null after successful logout', async () => {
+      mockAuthRepository.logout.resolves(true);
+      componentVm(wrapper).user = { isAuthenticated: true, username: 'test', token: 'token' };
+
+      await componentVm(wrapper).logout();
+      await flushPromises();
+
+      expect(componentVm(wrapper).user).toBeNull();
+    });
+
+    it('should not change user state after failed logout', async () => {
+      const error = new Error('Logout failed');
+      mockAuthRepository.logout.rejects(error);
+      const initialUser = { isAuthenticated: true, username: 'test', token: 'token' };
+      componentVm(wrapper).user = initialUser;
+
+      await componentVm(wrapper).logout();
+      await flushPromises();
+
+      expect(componentVm(wrapper).user).toEqual(initialUser);
+    });
+  });
 });
