@@ -237,5 +237,19 @@
       "indentSize" : 2,
       "baseName" : "jhipsterSampleApplication"
     }
+  }, {
+    "module" : "sonar-qube-java-backend-and-frontend",
+    "date" : "2024-09-19T17:20:39.998689514Z",
+    "properties" : {
+      "keycloakRealmName" : "jhipster",
+      "endOfLine" : "lf",
+      "springConfigurationFormat" : "yaml",
+      "packageName" : "com.mycompany.myapp",
+      "projectName" : "JHipster Sample Application",
+      "serverPort" : 8080,
+      "keycloakClientScopeName" : "jhipster",
+      "indentSize" : 2,
+      "baseName" : "jhipsterSampleApplication"
+    }
   } ]
 }
