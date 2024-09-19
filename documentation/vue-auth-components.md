@@ -1,6 +1,6 @@
 # Vue Authentication Components Documentation
 
-This document provides an overview and detailed explanation of the showcase the practical usage of the vue authentication module.
+This document provides an overview and showcase the practical usage of the vue authentication module.
 
 ## File Structure
 
@@ -667,8 +667,8 @@ export const dataAxiosResponse = <T>(data: T): AxiosResponse<T> =>
 
 ## Conclusion
 
-This documentation provides a comprehensive overview of the authentication-related components and utilities in our Vue.js application. It includes the main application files for routing and authentication, as well as the test files for ensuring the reliability of these components.
+This documentation offers a detailed overview of the authentication components and utilities within our Vue.js application. It covers both the primary application files related to routing and authentication, as well as the test files used to validate the functionality of these components.
 
-The authentication system is built around the `AuthVue` component, which handles user login and logout. The `AxiosAuthInterceptor` ensures that authenticated requests include the necessary authorization headers.
+At the core of the authentication system is the `AuthVue` component, which manages user login and logout processes. The `AxiosAuthInterceptor` ensures that all authenticated requests are properly equipped with the necessary authorization headers.
 
-The test files (`AuthVueComponent.spec.ts`, `AxiosAuthInterceptor.spec.ts`) demonstrate how to test these components, while the stub files (`KeycloakStub.ts`, `AxiosStub.ts`) provide mock implementations for external dependencies, facilitating easier and more reliable testing.
+The accompanying test files (`AuthVueComponent.spec.ts`, `AxiosAuthInterceptor.spec.ts`) illustrate how to effectively test these components, while the stub files (`KeycloakStub.ts`, `AxiosStub.ts`) provide mock implementations of external dependencies, enabling more streamlined and reliable testing.
