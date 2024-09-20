@@ -21,9 +21,8 @@ export class KeycloakHttp {
         username: this.keycloak.tokenParsed?.preferred_username ?? '',
         token: this.keycloak.token ?? '',
       };
-    } else {
-      return { isAuthenticated: false, username: '', token: '' };
     }
+    return { isAuthenticated: false, username: '', token: '' };
   }
 
   async login(): Promise<void> {
