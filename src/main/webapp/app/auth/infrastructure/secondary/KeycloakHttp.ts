@@ -18,8 +18,8 @@ export class KeycloakHttp {
     if (this.keycloak.authenticated) {
       return {
         isAuthenticated: true,
-        username: this.keycloak.tokenParsed?.preferred_username || '',
-        token: this.keycloak.token || '',
+        username: this.keycloak.tokenParsed?.preferred_username ?? '',
+        token: this.keycloak.token ?? '',
       };
     } else {
       return { isAuthenticated: false, username: '', token: '' };
@@ -44,6 +44,6 @@ export class KeycloakHttp {
   async refreshToken(): Promise<string> {
     await this.ensureInitialized();
     await this.keycloak.updateToken(5);
-    return this.keycloak.token || '';
+    return this.keycloak.token ?? '';
   }
 }

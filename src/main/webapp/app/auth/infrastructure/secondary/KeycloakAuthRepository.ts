@@ -3,7 +3,7 @@ import type { AuthenticatedUser } from '@/auth/domain/AuthenticatedUser';
 import { KeycloakHttp } from './KeycloakHttp';
 
 export class KeycloakAuthRepository implements AuthRepository {
-  constructor(private keycloakHttp: KeycloakHttp) {}
+  constructor(private readonly keycloakHttp: KeycloakHttp) {}
 
   async currentUser(): Promise<AuthenticatedUser> {
     try {
