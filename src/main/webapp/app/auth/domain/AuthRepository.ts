@@ -1,4 +1,4 @@
-import type {AuthenticatedUser} from "@/auth/domain/AuthenticatedUser";
+import type { AuthenticatedUser } from '@/auth/domain/AuthenticatedUser';
 
 export interface AuthRepository {
   currentUser(): Promise<AuthenticatedUser>;
