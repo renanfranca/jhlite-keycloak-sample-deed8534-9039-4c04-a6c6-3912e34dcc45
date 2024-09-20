@@ -22,12 +22,11 @@ describe('KeycloakAuthRepository', () => {
     expect(keycloakHttpStub.currentUser.calledOnce).toBe(true);
   });
 
-  it('should return unauthenticated user when currentUser throws an error', async () => {
-    keycloakHttpStub.currentUser.rejects(new Error('Authentication failed'));
+  it('should propagate error when currentUser fails', async () => {
+    const error = new Error('Authentication failed');
+    keycloakHttpStub.currentUser.rejects(error);
 
-    const user = await authRepository.currentUser();
-
-    expect(user).toEqual({ isAuthenticated: false, username: '', token: '' });
+    await expect(authRepository.currentUser()).rejects.toThrow('Authentication failed');
     expect(keycloakHttpStub.currentUser.calledOnce).toBe(true);
   });
 
@@ -39,7 +38,7 @@ describe('KeycloakAuthRepository', () => {
     expect(keycloakHttpStub.login.calledOnce).toBe(true);
   });
 
-  it('should throw an error when login fails', async () => {
+  it('should propagate error when login fails', async () => {
     const error = new Error('Login failed');
     keycloakHttpStub.login.rejects(error);
 
@@ -50,18 +49,16 @@ describe('KeycloakAuthRepository', () => {
   it('should logout a user', async () => {
     keycloakHttpStub.logout.resolves();
 
-    const result = await authRepository.logout();
+    await authRepository.logout();
 
-    expect(result).toBe(true);
     expect(keycloakHttpStub.logout.calledOnce).toBe(true);
   });
 
-  it('should return false when logout throws an error', async () => {
-    keycloakHttpStub.logout.rejects(new Error('Logout failed'));
+  it('should propagate error when logout fails', async () => {
+    const error = new Error('Logout failed');
+    keycloakHttpStub.logout.rejects(error);
 
-    const result = await authRepository.logout();
-
-    expect(result).toBe(false);
+    await expect(authRepository.logout()).rejects.toThrow('Logout failed');
     expect(keycloakHttpStub.logout.calledOnce).toBe(true);
   });
 
@@ -74,12 +71,11 @@ describe('KeycloakAuthRepository', () => {
     expect(keycloakHttpStub.authenticated.calledOnce).toBe(true);
   });
 
-  it('should return false when authenticated check throws an error', async () => {
-    keycloakHttpStub.authenticated.rejects(new Error('Authentication check failed'));
+  it('should propagate error when authenticated check fails', async () => {
+    const error = new Error('Authentication check failed');
+    keycloakHttpStub.authenticated.rejects(error);
 
-    const isAuthenticated = await authRepository.authenticated();
-
-    expect(isAuthenticated).toBe(false);
+    await expect(authRepository.authenticated()).rejects.toThrow('Authentication check failed');
     expect(keycloakHttpStub.authenticated.calledOnce).toBe(true);
   });
 
@@ -93,12 +89,11 @@ describe('KeycloakAuthRepository', () => {
     expect(keycloakHttpStub.refreshToken.calledOnce).toBe(true);
   });
 
-  it('should return an empty string when refreshToken throws an error', async () => {
-    keycloakHttpStub.refreshToken.rejects(new Error('Token refresh failed'));
+  it('should propagate error when refreshToken fails', async () => {
+    const error = new Error('Token refresh failed');
+    keycloakHttpStub.refreshToken.rejects(error);
 
-    const refreshedToken = await authRepository.refreshToken();
-
-    expect(refreshedToken).toBe('');
+    await expect(authRepository.refreshToken()).rejects.toThrow('Token refresh failed');
     expect(keycloakHttpStub.refreshToken.calledOnce).toBe(true);
   });
 });

@@ -5,49 +5,23 @@ import { KeycloakHttp } from './KeycloakHttp';
 export class KeycloakAuthRepository implements AuthRepository {
   constructor(private readonly keycloakHttp: KeycloakHttp) {}
 
-  async currentUser(): Promise<AuthenticatedUser> {
-    try {
-      return await this.keycloakHttp.currentUser();
-    } catch (error) {
-      console.error('Authentication failed', error);
-      return { isAuthenticated: false, username: '', token: '' };
-    }
+  currentUser(): Promise<AuthenticatedUser> {
+    return this.keycloakHttp.currentUser();
   }
 
-  async login(): Promise<void> {
-    try {
-      await this.keycloakHttp.login();
-    } catch (error) {
-      console.error('Login failed', error);
-      throw error;
-    }
+  login(): Promise<void> {
+    return this.keycloakHttp.login();
   }
 
-  async logout(): Promise<boolean> {
-    try {
-      await this.keycloakHttp.logout();
-      return true;
-    } catch (error) {
-      console.error('Logout failed', error);
-      return false;
-    }
+  logout(): Promise<void> {
+    return this.keycloakHttp.logout();
   }
 
-  async authenticated(): Promise<boolean> {
-    try {
-      return await this.keycloakHttp.authenticated();
-    } catch (error) {
-      console.error('isAuthenticated check failed', error);
-      return false;
-    }
+  authenticated(): Promise<boolean> {
+    return this.keycloakHttp.authenticated();
   }
 
-  async refreshToken(): Promise<string> {
-    try {
-      return await this.keycloakHttp.refreshToken();
-    } catch (error) {
-      console.error('Token refresh failed', error);
-      return '';
-    }
+  refreshToken(): Promise<string> {
+    return this.keycloakHttp.refreshToken();
   }
 }
