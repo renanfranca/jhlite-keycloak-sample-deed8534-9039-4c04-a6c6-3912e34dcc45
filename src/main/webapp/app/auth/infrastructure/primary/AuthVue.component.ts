@@ -10,45 +10,60 @@ export default defineComponent({
     const user = ref<AuthenticatedUser | null>(null);
     const isLoading = ref(true);
 
-    onMounted(async () => {
-      await init();
+    onMounted(() => {
+      init();
     });
 
-    const init = async () => {
+    const init = () => {
       isLoading.value = true;
-      const authenticated = await authRepository.authenticated();
-      if (authenticated) {
-        user.value = await authRepository.currentUser();
-      } else {
-        user.value = null;
-      }
-      isLoading.value = false;
+      return authRepository.authenticated()
+        .then((authenticated) => {
+          if (authenticated) {
+            return authRepository.currentUser();
+          } else {
+            return null;
+          }
+        })
+        .then((currentUser) => {
+          user.value = currentUser;
+        })
+        .catch((error) => {
+          console.error('Initialization failed:', error);
+          user.value = null;
+        })
+        .finally(() => {
+          isLoading.value = false;
+        });
     };
 
-    const login = async () => {
+    const login = () => {
       isLoading.value = true;
-      try {
-        await authRepository.login();
-        const currentUser = await authRepository.currentUser();
-        user.value = currentUser.isAuthenticated ? currentUser : null;
-      } catch (error) {
-        console.error('Login failed:', error);
-        user.value = null;
-      } finally {
-        isLoading.value = false;
-      }
+      authRepository.login()
+        .then(() => authRepository.currentUser())
+        .then((currentUser) => {
+          user.value = currentUser.isAuthenticated ? currentUser : null;
+        })
+        .catch((error) => {
+          console.error('Login failed:', error);
+          user.value = null;
+        })
+        .finally(() => {
+          isLoading.value = false;
+        });
     };
 
-    const logout = async () => {
+    const logout = () => {
       isLoading.value = true;
-      try {
-        await authRepository.logout();
-        user.value = null;
-      } catch (error) {
-        console.error('Logout failed:', error);
-      } finally {
-        isLoading.value = false;
-      }
+      authRepository.logout()
+        .then(() => {
+          user.value = null;
+        })
+        .catch((error) => {
+          console.error('Logout failed:', error);
+        })
+        .finally(() => {
+          isLoading.value = false;
+        });
     };
 
     return {
