@@ -16,7 +16,7 @@ export default defineComponent({
 
     const init = () => {
       isLoading.value = true;
-      return authRepository.authenticated()
+      authRepository.authenticated()
         .then((authenticated) => {
           if (authenticated) {
             return authRepository.currentUser();
