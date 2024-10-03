@@ -1,4 +1,3 @@
-
 import { describe, it, expect, beforeEach } from 'vitest';
 import type { InternalAxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { setupAxiosInterceptors } from '@/shared/http/infrastructure/secondary/AxiosAuthInterceptor';
@@ -7,7 +6,7 @@ import { provide } from '@/injections';
 import sinon from 'sinon';
 import type { SinonStub } from 'sinon';
 import type { AuthRepository } from '@/auth/domain/AuthRepository';
-import { stubAxiosInstance, dataAxiosResponse } from './AxiosStub';
+import { stubAxiosInstance } from './AxiosStub';
 import type { AxiosStubInstance } from './AxiosStub';
 import { AxiosHeaders } from 'axios';
 
@@ -70,12 +69,12 @@ describe('AxiosAuthInterceptor', () => {
         data: {},
         statusText: '',
         headers: {},
-        config: {} as InternalAxiosRequestConfig
+        config: {} as InternalAxiosRequestConfig,
       },
       isAxiosError: true,
       toJSON: () => ({}),
       name: '',
-      message: ''
+      message: '',
     };
     const responseInterceptor = axiosInstance.interceptors.response.use.args[0][1];
 
@@ -93,12 +92,12 @@ describe('AxiosAuthInterceptor', () => {
         data: {},
         statusText: 'Internal Server Error',
         headers: {},
-        config: {} as InternalAxiosRequestConfig
+        config: {} as InternalAxiosRequestConfig,
       },
       isAxiosError: true,
       toJSON: () => ({}),
       name: 'AxiosError',
-      message: 'Request failed with status code 500'
+      message: 'Request failed with status code 500',
     };
 
     const responseInterceptor = axiosInstance.interceptors.response.use.args[0][1];
@@ -114,7 +113,7 @@ describe('AxiosAuthInterceptor', () => {
       isAxiosError: true,
       toJSON: () => ({}),
       name: 'AxiosError',
-      message: 'Network Error'
+      message: 'Network Error',
     };
 
     const responseInterceptor = axiosInstance.interceptors.response.use.args[0][1];
@@ -132,7 +131,7 @@ describe('AxiosAuthInterceptor', () => {
       status: 200,
       statusText: 'OK',
       headers: {},
-      config: {} as InternalAxiosRequestConfig
+      config: {} as InternalAxiosRequestConfig,
     };
 
     const responseInterceptor = axiosInstance.interceptors.response.use.args[0][0];
