@@ -93,6 +93,8 @@
     <frontend-maven-plugin.version>1.15.0</frontend-maven-plugin.version>
     <npm.version>10.8.3</npm.version>
     <node.version>v20.17.0</node.version>
+    <properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
+    <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
   </properties>
 
   <build>
@@ -253,6 +255,30 @@
               </configuration>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>properties-maven-plugin</artifactId>
+          <version>${properties-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>default-cli</id>
+              <phase>initialize</phase>
+              <goals>
+                <goal>read-project-properties</goal>
+              </goals>
+              <configuration>
+                <files>
+                  <file>sonar-project.properties</file>
+                </files>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar-maven-plugin.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -453,6 +479,10 @@
         <configuration>
           <installDirectory>${project.build.directory}</installDirectory>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
       </plugin>
     </plugins>
     <defaultGoal>spring-boot:run</defaultGoal>

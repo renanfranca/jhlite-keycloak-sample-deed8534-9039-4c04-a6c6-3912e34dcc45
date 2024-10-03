@@ -49,5 +49,6 @@ docker compose -f src/main/docker/keycloak.yml up -d
 - [Hexagonal architecture](documentation/hexagonal-architecture.md)
 - [Front hexagonal architecture](documentation/front-hexagonal-architecture.md)
 - [Vue](documentation/vue.md)
+- [sonar](documentation/sonar.md)
 
 <!-- jhipster-needle-documentation -->
